@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="styles.css" rel="stylesheet">
+
+    <style>
+        .leader {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .leader h3 {
+            margin-right: 10px;
+        }
+
+        .square {
+            width: 100px;
+            height: 100px;
+            background-color: violet;
+            margin: 10px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .green {
+            background-color: green !important;
+        }
+
+        .toggle-button {
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Навигация -->
+    <nav class="navbar navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Лабораторная работа №3</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Меню</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="firstpage.html">Вторая лабораторная</a>
+                            <a class="nav-link" href="twopage.html">Третья лабораторная</a>
+                            <a class="nav-link" href="freepage.html">Четвёртая лабораторная</a>
+                            <a class="nav-link" href="#">Пятая лабораторная</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <main class="container mt-5 pt-5">
+        <h1>Выставление оценок</h1>
+
+        <!-- Кнопки для выставления оценок -->
+        <div class="btn-group mb-3">
+            <button type="button" class="btn btn-primary" id="set2">Выставить всем 2</button>
+            <button type="button" class="btn btn-secondary" id="set3">Выставить всем 3</button>
+            <button type="button" class="btn btn-success" id="set4">Выставить всем 4</button>
+            <button type="button" class="btn btn-danger" id="set5">Выставить всем 5</button>
+            <button type="button" class="btn btn-warning" id="clearRating">Очистить все</button>
+        </div>
+
+        <!-- Таблица с оценками -->
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Оценка</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Григорий Лепс</td>
+                    <td><input class="rating form-control" type="text" placeholder="Балл" value=""></td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Валерий Мармеладзе</td>
+                    <td><input class="rating form-control" type="text" placeholder="Балл" value=""></td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Виктор Цой</td>
+                    <td><input class="rating form-control" type="text" placeholder="Балл" value=""></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Кнопка для подсчета среднего балла -->
+        <button type="button" class="btn btn-warning" id="calculateAverage">Посчитать средний балл</button>
+
+        <!-- Вывод среднего балла -->
+        <p class="mt-3">Средний балл: <span id="average">0</span></p>
+
+        <!-- Блок с квадратом и кнопкой для его скрытия -->
+        <div class="container text-center mt-5">
+            <h1>Розовый Квадрат (но в коде он фиолетовый (violet))</h1>
+            <div id="squareContainer" class="d-flex justify-content-center flex-wrap">
+                <!-- Один квадрат -->
+                <div class="square" id="toggleSquare"></div>
+            </div>
+            <button type="button" class="toggle-button" id="toggleButton">Скрыть квадрат</button>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Функция для выставления оценок
+            function setRatings(rating) {
+                document.querySelectorAll('.rating').forEach(input => {
+                    input.value = rating;
+                });
+            }
+
+            // Привязка кнопок для выставления оценок
+            document.getElementById('set2').addEventListener('click', () => setRatings(2));
+            document.getElementById('set3').addEventListener('click', () => setRatings(3));
+            document.getElementById('set4').addEventListener('click', () => setRatings(4));
+            document.getElementById('set5').addEventListener('click', () => setRatings(5));
+
+            // Очистка всех оценок
+            document.getElementById('clearRating').addEventListener('click', () => {
+                document.querySelectorAll('.rating').forEach(input => {
+                    input.value = '';
+                });
+                document.getElementById('average').textContent = 0;
+            });
+
+            // Подсчёт среднего балла
+            document.getElementById('calculateAverage').addEventListener('click', () => {
+                const ratings = Array.from(document.querySelectorAll('.rating')).map(input => parseFloat(input.value) || 0);
+                const total = ratings.reduce((acc, val) => acc + val, 0);
+                const average = (total / ratings.length).toFixed(2);
+                document.getElementById('average').textContent = average;
+            });
+
+            // Скрытие и показ квадрата
+            const toggleButton = document.getElementById('toggleButton');
+            const square = document.getElementById('toggleSquare');
+
+            toggleButton.addEventListener('click', () => {
+                if (square.style.display === 'none') {
+                    square.style.display = 'inline-block';
+                    toggleButton.textContent = 'Скрыть квадрат';
+                } else {
+                    square.style.display = 'none';
+                    toggleButton.textContent = 'Показать квадрат';
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
